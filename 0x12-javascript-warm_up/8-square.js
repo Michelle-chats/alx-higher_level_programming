@@ -1,11 +1,12 @@
 #!/usr/bin/node
-// JS Script
-
-const num = parseInt(process.argv[2]);
-if (num) {
-  for (let i = 0; i < process.argv[2]; i++) {
-    console.log('C is fun');
-  }
+// prints a square
+const size = parseInt(process.argv[2]);
+if (Number.isNaN(size)) {
+	console.log('Missing size');
 } else {
-  console.log('Missing number of occurrences');
+	for (let i = 0; i < size; i++) {
+		for (let j = 0; j < size; j++) {
+			process.stdout.write('X');
+		}console.log();
+	}
 }
