@@ -1,26 +1,28 @@
 #!/usr/bin/python3
 """
-Displays all values in the states table of the database hbtn_0e_0_usa
-whose name matches that supplied as argument.
-Usage: ./2-my_filter_states.py <mysql username> \
-                                <mysql password> \
-                                <database name> \   
-                                <state name searched>
-                                <state name searched>
-                                <state name searched>
+Module for script that takes an argument and displays all value in the
+states table where name matches the argument
 """
+
+
 import sys
 import MySQLdb
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], port=3306, host="localhost",
-                          passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM states WHERE name LIKE '{:s}' ORDER BY \
-    id ASC".format(sys.argv[4]))
-    states = c.fetchall()
+    name = sys.argv[4]
+    host = "localhost"
+    port = 3306
+    user = sys.argv[1]
+    passwd = sys.argv[2]
+    database = sys.argv[3]
+    db = MySQLdb.connect(host=host, port=port, user=user,
+                        passwd=passwd, db=database)
+    cur = db.cursor()
+
+    sql_cmd = "SELECT * FROM states WHERE name='{}' ORDER BY id;".format(name)
+    cur.execute(sql_cmd)
+    states = cur.fetchall()
     for state in states:
-        if state[1] == sys.argv[4]:
-            print(state)
-     c.close()
-     db.close()
+        print(state)
+    cur.close()
+    db.close()
